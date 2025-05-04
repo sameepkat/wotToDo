@@ -1,6 +1,5 @@
 /*
 Copyright © 2025 Sameep Kathayat <sameepsk2@gmail.com>
-
 */
 package cmd
 
@@ -10,13 +9,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-
-
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "wottodo",
 	Short: "A simple ToDo app",
-	Long: `A ToDO app that can add, edit, delete your ToDos. A simple and lightweight app made specifically for using ToDo in CLI`,
+	Long:  `A simple ToDo app`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
@@ -42,5 +39,3 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
-
