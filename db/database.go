@@ -64,3 +64,12 @@ func Add(db *sql.DB, title string, status string) (sql.Result, error) {
 
 	return res, nil
 }
+
+func List(db *sql.DB, query string) (*sql.Rows, error) {
+	res, err := db.Query(query)
+	if err != nil {
+		return nil, fmt.Errorf("error getting todos %v", err)
+	}
+
+	return res, err
+}
