@@ -6,8 +6,11 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"os"
+	"strconv"
 	"time"
 
+	"github.com/olekukonko/tablewriter"
 	"github.com/sameepkat/wottodo/db"
 	"github.com/spf13/cobra"
 )
@@ -42,11 +45,13 @@ var listCmd = &cobra.Command{
 
 		res, err := db.List(sqlDB, query)
 		if err != nil {
-			// fmt.Println("error fetching data: ", err)
-			// return
-			log.Printf("errror fetching data: ", err)
+			log.Println("errror fetching data: ", err)
+			return
 		}
 
+		// Setup the table once
+		table := tablewriter.NewWriter(os.Stdout)
+		table.SetHeader([]string{"ID", "Title", "Status", "CreatedAt"})
 		// Create variables to store data
 		var id uint32
 		var title string
@@ -57,11 +62,22 @@ var listCmd = &cobra.Command{
 			err := res.Scan(&id, &title, &status, &createdAt)
 			if err != nil {
 				fmt.Println("error scanning data from table: ", err)
+				continue
 			}
 			_, month, day := createdAt.Date()
 			min := createdAt.Minute()
-			fmt.Printf("%d %s %s %d-%d-%d\n", id, title, status, month, day, min)
+
+			createdAtStr := fmt.Sprintf("%s %02d %02dmin", month, day, min)
+
+			table.Append([]string{
+				strconv.Itoa(int(id)),
+				title,
+				status,
+				createdAtStr,
+			})
 		}
+
+		table.Render()
 	},
 }
 
