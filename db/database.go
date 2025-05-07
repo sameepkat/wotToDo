@@ -83,3 +83,13 @@ func Remove(db *sql.DB, query string) error {
 	}
 	return nil
 }
+
+func Update(db *sql.DB, query string) error {
+	_, err := db.Exec(query)
+
+	if err != nil {
+		log.Println("cannot update: ", err)
+		return err
+	}
+	return nil
+}

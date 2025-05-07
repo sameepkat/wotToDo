@@ -19,9 +19,13 @@ import (
 
 // rmCmd represents the rm command
 var rmCmd = &cobra.Command{
-	Use:   "rm",
+	Use:   "rm [id]",
 	Short: "Delete a task",
-	Long:  `Deleting a task using id`,
+	Long: `Deleting a task using id
+Examples:
+	wottodo rm 1
+	wottodo rm 2, 5, 9
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Print("This action cannot be recovered. Continute (y) : ")
 
