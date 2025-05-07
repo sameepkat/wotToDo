@@ -4,8 +4,11 @@ Copyright © 2025 sameepkat <sameepsk2@gmail.com>
 package cmd
 
 import (
+	"bufio"
 	"bytes"
+	"fmt"
 	"log"
+	"os"
 	"strconv"
 	"text/template"
 
@@ -20,6 +23,20 @@ var rmCmd = &cobra.Command{
 	Short: "Delete a task",
 	Long:  `Deleting a task using id`,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Print("This action cannot be recovered. Continute (y) : ")
+
+		reader := bufio.NewReader(os.Stdin)
+		char, _, err := reader.ReadRune()
+		if err != nil {
+			fmt.Println("Error reading input: ", err)
+			return
+		}
+
+		if char != 'y' {
+			return
+
+		}
+
 		var query string = `DELETE * FROM Tasks WHERE Status="DONE"`
 		var ids []int
 		if len(args) > 0 {
