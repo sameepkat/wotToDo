@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"os/user"
 	"path/filepath"
@@ -72,4 +73,13 @@ func List(db *sql.DB, query string) (*sql.Rows, error) {
 	}
 
 	return res, err
+}
+
+func Remove(db *sql.DB, query string) error {
+	_, err := db.Exec(query)
+	if err != nil {
+		log.Println("cannot delete: ", err)
+		return err
+	}
+	return nil
 }
